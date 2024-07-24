@@ -1,0 +1,12 @@
+.app {
+    box-sizing: border-box;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.pages {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}

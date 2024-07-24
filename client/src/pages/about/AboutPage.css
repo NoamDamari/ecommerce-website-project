@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex: 1;
+}
+
+.about-text-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: -10%;
+}
+
+.title {
+  font-size: clamp(4rem, 5vw, 8rem);
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+.description {
+  font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+  line-height: 1.6;
+  color: #666;
+}

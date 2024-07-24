@@ -1,0 +1,9 @@
+.navbar {
+    background-color: rgb(238, 238, 238);
+}
+.buttons-container {
+    width: 20%;
+    min-width: fit-content;
+    display: flex;
+    justify-content: space-around;
+}

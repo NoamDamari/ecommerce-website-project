@@ -1,0 +1,4 @@
+.product-page-container {
+    display: grid;
+    grid-template-columns: minmax(150px, 18%) auto;
+  }
