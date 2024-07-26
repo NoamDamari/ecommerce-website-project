@@ -1,0 +1,18 @@
+
+.quantity-control {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.quantity-button {
+  border: none;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.quantity-display {
+  margin: 0 10px;
+  font-size: 16px;
+}

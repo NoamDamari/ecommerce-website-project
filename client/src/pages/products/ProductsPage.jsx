@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from "react";
-import { ProductsContext } from "../../context/productsContext";
+import { ProductsContext } from "../../context/ProductsContext";
 import ProductsContainer from "../../components/productsContainer/ProductsContainer";
 import SideBar from "../../components/sidebar/SideBar";
 import "./ProductsPage.css";

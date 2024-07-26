@@ -3,8 +3,14 @@ import "./Navbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 
 const Navbar = () => {
+
+  const { handleShowCart, getTotalItemsInCart } = useContext(CartContext);
+  const totalItems = getTotalItemsInCart();
+
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
@@ -45,10 +51,14 @@ const Navbar = () => {
               Login
             </Link>
             <button className="btn btn-outline-primary">Logout</button>
-            <button type="button" className="btn btn-primary position-relative">
+            <button
+              type="button"
+              className="btn btn-primary position-relative"
+              onClick={handleShowCart}
+            >
               <i className="bi bi-cart"></i>
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                99+
+                {totalItems}
                 <span className="visually-hidden">unread messages</span>
               </span>
             </button>

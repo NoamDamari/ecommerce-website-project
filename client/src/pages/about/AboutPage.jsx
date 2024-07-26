@@ -1,6 +1,7 @@
 import React from "react";
 import "./AboutPage.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../../components/filterSection/FilterSection";
 
 const AboutPage = () => {
   return (

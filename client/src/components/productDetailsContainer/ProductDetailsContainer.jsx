@@ -1,11 +1,24 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./ProductDetailsContainer.css";
-import { useContext } from "react";
-import { ProductsContext } from "../../context/productsContext";
+import QuantitySelector from "../quantitySelector/QuantitySelector";
+import { useContext, useState } from "react";
+import { ProductsContext } from "../../context/ProductsContext";
+import { CartContext } from "../../context/CartContext";
 
 const ProductDetailsContainer = () => {
   const { selectedProduct } = useContext(ProductsContext);
+  const { addToCart } = useContext(CartContext);
+
+  const [quantity, setQuantity] = useState(1);
+
+  const handleQuantityChange = (newQuantity) => {
+    setQuantity(newQuantity);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(selectedProduct, quantity);
+  };
 
   if (!selectedProduct) {
     return <div>Product not found</div>;
@@ -35,13 +48,20 @@ const ProductDetailsContainer = () => {
               <p className="card-text product-description">
                 {selectedProduct.brand}
               </p>
+              <QuantitySelector
+                initialQuantity={quantity}
+                onQuantityChange={handleQuantityChange}
+              />
               <p className="card-text">
-              <strong>Total price</strong>
+                <strong>Total price</strong>
                 <small className="text-body-secondary">
                   {selectedProduct.price}
                 </small>
               </p>
-              <button className="btn btn-dark"> Add to cart</button>
+              <button className="btn btn-dark" onClick={handleAddToCart}>
+                {" "}
+                Add to cart
+              </button>
             </div>
           </div>
         </div>

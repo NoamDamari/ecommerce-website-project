@@ -1,5 +1,4 @@
 .sidebar-container {
-    background-color: aquamarine;
     width: 100%;
     min-width: max-content; 
     position: sticky;
@@ -12,4 +11,10 @@
     color: rgb(53, 53, 53);
 }
 
+.reset-btn {
+    margin-bottom: 10px;
+}
 
+.star-icon {
+    margin: auto 4px;
+}
