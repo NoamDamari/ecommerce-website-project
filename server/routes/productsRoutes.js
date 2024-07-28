@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const axios = require("axios");
 
-// Get single product
+// Get all products list
 router.get("/", async (req, res) => {
   try {
     const fields = "id,title,description,brand,category,price,images,rating";

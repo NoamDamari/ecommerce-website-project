@@ -47,7 +47,7 @@ export const priceRangeOptions = [
 ];
 
 export const ratingOptions = [
-  { label: "All Ratings", value: null },
+  { label: "All Ratings", value: 0 },
   {
     label: (
       <div className="stars">

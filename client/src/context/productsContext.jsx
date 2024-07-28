@@ -11,12 +11,12 @@ export const ProductsProvider = ({ children }) => {
 
   const [selectedCategories, setSelectedCategories] = useState(["All items"]);
   const [priceRange, setPriceRange] = useState([0, Infinity]);
-  const [rating, setRating] = useState(null);
+  const [rating, setRating] = useState(0);
 
   // Ref to track if products have been fetched
   const isFetched = useRef(false);
 
-  //Fetch products from API and update state.
+  // Fetch products from API and update state.
   const fetchProducts = useCallback(async () => {
     try {
       const url = "/api/products";
@@ -55,6 +55,7 @@ export const ProductsProvider = ({ children }) => {
     applyFilters();
   }, [selectedCategories, priceRange, rating]);
 
+  // Apply filters to products list
   const applyFilters = () => {
     let filteredProducts = productsList;
 

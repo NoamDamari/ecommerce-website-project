@@ -1,19 +1,27 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors')
 
-// express app
+const express = require('express');
+const cors = require('cors')
+const connectToDatabase = require('./database/db');
+
+// Initialize Express app
 const app = express();
 const PORT = 3000;
 
+// Middlewares
 app.use(express.json());
 app.use(cors());
 
-// Routes
-const productsRoute = require('./routes/products');
+// Connect to the database
+connectToDatabase();
 
-app.use('/api/products' , productsRoute);
+// Import routes
+const productsRoutes = require('./routes/productsRoutes');
+const cartRoutes = require('./routes/cartRoutes');
+
+// Define routes
+app.use('/api/products' , productsRoutes);
+app.use('/api/cart', cartRoutes);
 
 app.listen(PORT , () => {
     console.log(`listening to port: ${PORT}`);
-})
+});
