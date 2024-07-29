@@ -1,21 +1,40 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState , useContext } from "react";
 import axios from "axios";
-
+import { UserContext } from "./UserContext";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-
+  const { user } = useContext(UserContext);
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
   const handleShowCart = () => setShowCart(true);
   const handleCloseCart = () => setShowCart(false);
 
+  useEffect(() => {
+    if (user) {
+      fetchCartItems(user.id);
+    }
+    else {
+      setCartItems([])
+    }
+  }, [user]);
+
+  const fetchCartItems = async (userId) => {
+    try {
+      const response = await axios.get(`api/cart/cart/${userId}`);
+      setCartItems(response.data);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
+
   // Add a product to the cart
-  const addToCart = async (product, quantityToAdd) => {
+  const addToCart = async (product, quantityToAdd, userId) => {
     try {
       // Send request to add a product to the cart on the server
       await axios.post("/api/cart/add", {
+        userId: userId,
         ...product,
         quantity: quantityToAdd,
       });
@@ -53,10 +72,11 @@ export const CartProvider = ({ children }) => {
 
   // Remove an item from the cart
   const removeFromCart = async (itemId) => {
+    const userId = user.id
     console.log("Deleting item with ID:", itemId);
     try {
       // Send request to remove an item from the cart on the server
-      await axios.delete(`/api/cart/delete/${itemId}`);
+      await axios.delete(`/api/cart/delete/${userId}/${itemId}`);
 
       // Update local cart state
       setCartItems((prevItems) =>

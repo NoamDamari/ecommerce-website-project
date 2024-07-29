@@ -5,10 +5,12 @@ import QuantitySelector from "../quantitySelector/QuantitySelector";
 import { useContext, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 import { CartContext } from "../../context/CartContext";
+import {UserContext} from "../../context/UserContext"
 
 const ProductDetailsContainer = () => {
   const { selectedProduct } = useContext(ProductsContext);
   const { addToCart } = useContext(CartContext);
+  const {user} = useContext(UserContext);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -17,7 +19,13 @@ const ProductDetailsContainer = () => {
   };
 
   const handleAddToCart = () => {
-    addToCart(selectedProduct, quantity);
+    if(user) {
+      addToCart(selectedProduct, quantity , user.id);
+      console.log("Product added to cart")
+    }
+    else {
+      alert("You need to login first")
+    }
   };
 
   if (!selectedProduct) {

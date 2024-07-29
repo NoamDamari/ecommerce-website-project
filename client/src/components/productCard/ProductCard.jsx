@@ -3,17 +3,25 @@ import "./ProductCard.css";
 import { Link } from "react-router-dom";
 import { ProductsContext } from "../../context/ProductsContext";
 import { CartContext } from "../../context/CartContext";
+import {UserContext} from "../../context/UserContext"
 
 const ProductCard = ({ product }) => {
   const { selectProduct } = useContext(ProductsContext);
   const { addToCart } = useContext(CartContext);
+  const {user} = useContext(UserContext);
 
   const handleProductClick = () => {
     selectProduct(product);
   };
 
   const handleAddToCart = () => {
-    addToCart(product, 1);
+    if(user) {
+      addToCart(product, 1 , user.id);
+      console.log("Product added to cart")
+    }
+    else {
+      alert("You need to login first")
+    }
   };
 
   return (

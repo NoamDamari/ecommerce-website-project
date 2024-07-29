@@ -5,9 +5,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import { UserContext } from "../../context/UserContext";
 
 const Navbar = () => {
-
+  const { user , handleUserSignOut } = useContext(UserContext);
   const { handleShowCart, getTotalItemsInCart } = useContext(CartContext);
   const totalItems = getTotalItemsInCart();
 
@@ -47,10 +48,23 @@ const Navbar = () => {
             </li>
           </ul>
           <div className="buttons-container">
-            <Link to="/login" className="btn btn-outline-success">
-              Login
-            </Link>
-            <button className="btn btn-outline-primary">Logout</button>
+            {user && (
+              <div>
+                <span>{user.username}</span>
+                <button className="btn-outline-dark" onClick={handleUserSignOut}>Sign Out</button>
+              </div>
+            )}
+            {!user && (
+              <div className="d">
+                <Link to="/login" className="btn btn-outline-success">
+                  Sign In
+                </Link>
+                <Link to="/register" className="btn btn-outline-primary">
+                  Sign Up
+                </Link>
+              </div>
+            )}
+
             <button
               type="button"
               className="btn btn-primary position-relative"
@@ -59,7 +73,7 @@ const Navbar = () => {
               <i className="bi bi-cart"></i>
               <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                 {totalItems}
-                <span className="visually-hidden">unread messages</span>
+                <span className="visually-hidden">Items in cart</span>
               </span>
             </button>
           </div>
