@@ -7,7 +7,7 @@ const RegistrationForm = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { handleUserLogin } = useContext(UserContext);
+  const { handleUserRegister , isLoading} = useContext(UserContext);
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -26,15 +26,15 @@ const RegistrationForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/auth/register", {
-        username,
-        email,
-        password,
-      });
-
-      handleUserLogin(response.data.user)
+      await handleUserRegister(username, email, password);
+     
+      setUsername("");
+      setEmail("");
+      setPassword("");
     } catch (error) {
-      alert(error.response.data.message);
+     
+      console.error("Registration error:", error);
+      alert("Registration failed. Please try again.");
     }
   };
 
@@ -79,7 +79,7 @@ const RegistrationForm = () => {
             onChange={handleInputChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary" >
+        <button type="submit" className="btn btn-primary" disabled={isLoading}>
           Register
         </button>
       </form>

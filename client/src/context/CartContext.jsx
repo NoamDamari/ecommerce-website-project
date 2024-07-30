@@ -1,28 +1,33 @@
-import { createContext, useEffect, useState , useContext } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "./UserContext";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
   const [showCart, setShowCart] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
   const handleShowCart = () => setShowCart(true);
   const handleCloseCart = () => setShowCart(false);
 
+  // Fetch cart items when user or token changes
   useEffect(() => {
-    if (user) {
-      fetchCartItems(user.id);
+    if (user && token) {
+      fetchCartItems(user.id, token);
+    } else {
+      setCartItems([]);
     }
-    else {
-      setCartItems([])
-    }
-  }, [user]);
+  }, [user, token]);
 
-  const fetchCartItems = async (userId) => {
+  // Function to fetch cart items from the server
+  const fetchCartItems = async (userId, token) => {
     try {
-      const response = await axios.get(`api/cart/cart/${userId}`);
+      const response = await axios.get(`api/cart/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setCartItems(response.data);
     } catch (error) {
       console.error("Error fetching cart items:", error);
@@ -33,11 +38,19 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (product, quantityToAdd, userId) => {
     try {
       // Send request to add a product to the cart on the server
-      await axios.post("/api/cart/add", {
-        userId: userId,
-        ...product,
-        quantity: quantityToAdd,
-      });
+      await axios.post(
+        "/api/cart/add",
+        {
+          userId: userId,
+          ...product,
+          quantity: quantityToAdd,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       // Update local cart state
       setCartItems((prevItems) => {
@@ -54,7 +67,7 @@ export const CartProvider = ({ children }) => {
           return [...prevItems, { ...product, quantity: quantityToAdd }];
         }
       });
-      alert("Product added to cart successfully!");
+      console.log("Product added to cart successfully!");
     } catch (error) {
       console.error("Error adding product to cart:", error);
       alert("Failed to add product to cart.");
@@ -72,11 +85,15 @@ export const CartProvider = ({ children }) => {
 
   // Remove an item from the cart
   const removeFromCart = async (itemId) => {
-    const userId = user.id
+    const userId = user.id;
     console.log("Deleting item with ID:", itemId);
     try {
       // Send request to remove an item from the cart on the server
-      await axios.delete(`/api/cart/delete/${userId}/${itemId}`);
+      await axios.delete(`/api/cart/delete/${userId}/${itemId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       // Update local cart state
       setCartItems((prevItems) =>

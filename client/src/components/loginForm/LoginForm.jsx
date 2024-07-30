@@ -5,10 +5,10 @@ import { useState } from "react";
 import { UserContext } from "../../context/UserContext";
 
 const LoginForm = () => {
-  const { handleUserLogin } = useContext(UserContext);
+  const { handleUserLogin , isLoading } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+
 
   const handleInputChange = (event) => {
     const { id, value } = event.target;
@@ -22,18 +22,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const response = await axios.post("/api/auth/login", { email, password });
-      if (response.status === 200) {
-        handleUserLogin(response.data.user);
-        setIsLoading(false);
-      }
-    } catch (error) {
-      alert(error.response.data.message);
-      setIsLoading(false);
-    }
+    await handleUserLogin(email , password)
   };
 
   return (

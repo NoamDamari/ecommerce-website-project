@@ -1,10 +1,11 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const connectToDatabase = require("./database/db");
 
 // Initialize Express app
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
 // Middlewares
 app.use(express.json());
