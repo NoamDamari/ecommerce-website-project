@@ -1,31 +1,29 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./CartItem.css";
-import grey_bg from "../../assets/grey_bg.png";
-import { useContext, useState , useEffect } from "react";
-import { CartContext } from "../../context/CartContext";
+import { useState, useEffect } from "react";
+import { useCart } from "../../hooks/useCart";
 import QuantitySelector from "../quantitySelector/QuantitySelector";
 
 import React from "react";
 
-const CartItem = ({ item }) => {
-  const { removeFromCart , updateCartItemQuantity } = useContext(CartContext);
+const CartItem = ({ item, onQuantityChange }) => {
+  const { handleRemoveItemFromCart } = useCart();
   const [quantity, setQuantity] = useState(item.quantity || 1);
-  const [price , setPrice] = useState(item.price * item.quantity || 0)
- 
+  const [price, setPrice] = useState(item.price * item.quantity || 0);
+
   useEffect(() => {
     setQuantity(item.quantity);
   }, [item.quantity]);
 
-
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
-    setPrice(item.price*newQuantity)
-    updateCartItemQuantity(item.id , newQuantity);
+    setPrice(item.price * newQuantity);
+    onQuantityChange(item.id, newQuantity);
   };
 
-  const handleRemoveFromCart = () => {
-    removeFromCart(item.id);
+  const handleRemoveItemFromCartClick = () => {
+    handleRemoveItemFromCart(item.id);
   };
 
   return (
@@ -46,7 +44,7 @@ const CartItem = ({ item }) => {
                 type="button"
                 className="btn-close remove-item-btn"
                 aria-label="Close"
-                onClick={handleRemoveFromCart}
+                onClick={handleRemoveItemFromCartClick}
               >
                 <i className="bi bi-x close-icon"></i>
               </button>
@@ -56,7 +54,9 @@ const CartItem = ({ item }) => {
               onQuantityChange={handleQuantityChange}
             />
             <p className="card-text">
-              <small className="text-body-secondary">Price: {price.toFixed(2)}</small>
+              <small className="text-body-secondary">
+                Price: {price.toFixed(2)}
+              </small>
             </p>
           </div>
         </div>

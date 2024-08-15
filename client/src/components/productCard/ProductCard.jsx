@@ -2,22 +2,21 @@ import React, { useContext } from "react";
 import "./ProductCard.css";
 import { Link } from "react-router-dom";
 import { ProductsContext } from "../../context/ProductsContext";
-import { CartContext } from "../../context/CartContext";
 import {UserContext} from "../../context/UserContext"
+import { useCart } from "../../hooks/useCart";
 
 const ProductCard = ({ product }) => {
   const { selectProduct } = useContext(ProductsContext);
-  const { addToCart } = useContext(CartContext);
+  const { handleAddToCart } = useCart();
   const {user} = useContext(UserContext);
 
   const handleProductClick = () => {
     selectProduct(product);
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCartClick = () => {
     if(user) {
-      addToCart(product, 1 , user.id);
-      console.log("Product added to cart")
+      handleAddToCart(product , 1);
     }
     else {
       alert("You need to login first")
@@ -45,7 +44,7 @@ const ProductCard = ({ product }) => {
             <p>{product.rating}</p>
           </div>
         </div>
-        <button className="btn btn-primary" onClick={handleAddToCart}>
+        <button className="btn btn-primary" onClick={handleAddToCartClick}>
           Add to cart
         </button>
       </div>

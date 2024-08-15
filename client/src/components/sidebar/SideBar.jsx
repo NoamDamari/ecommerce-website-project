@@ -1,21 +1,21 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./SideBar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../filterSection/FilterSection";
-import { ProductsContext } from "../../context/ProductsContext";
 import FilterSection from "../filterSection/FilterSection";
 import { useState } from "react";
-import { categoryOptions, priceRangeOptions, ratingOptions } from "../../data/filterOptions";
+import { priceRangeOptions, ratingOptions , techCategoriesOptions } from "../../data/filterOptions";
+import { useFilters } from "../../hooks/useFilters";
 
 
 const SideBar = () => {
-  // Products context values
+  
   const {
     handleCategorySelect,
     handlePriceRangeSelect,
     handleRatingSelect,
     resetFilters,
-  } = useContext(ProductsContext);
+  } = useFilters();
 
   const [reset, setReset] = useState(false);
 
@@ -33,7 +33,7 @@ const SideBar = () => {
       </button>
       <FilterSection
         title={"Categories"}
-        options={categoryOptions}
+        options={techCategoriesOptions}
         onSelect={handleCategorySelect}
         reset={reset}
       />

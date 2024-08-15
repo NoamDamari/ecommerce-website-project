@@ -3,13 +3,59 @@ import "./CartContainer.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import React from "react";
-import { useContext } from "react";
-import { CartContext } from "../../context/CartContext";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { useCart } from "../../hooks/useCart";
 
 const CartContainer = () => {
-  const { cartItems, handleCloseCart, showCart } = useContext(CartContext);
+  const {
+    cartItems,
+    handleCloseCart,
+    showCart,
+    handleUpdateMultipleCartItems,
+  } = useCart();
 
-  const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const debounceTimeoutRef = useRef(null);
+  const [updatedItems, setUpdatedItems] = useState([]);
+
+  // Calculate the total price of items in the cart
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
+  // Debounced function to update multiple cart items
+  const debouncedUpdateCartItems = useCallback(() => {
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+
+    debounceTimeoutRef.current = setTimeout(() => {
+      handleUpdateMultipleCartItems(updatedItems);
+      setUpdatedItems([]);
+    }, 2000);
+  }, [updatedItems, handleUpdateMultipleCartItems]);
+
+  // Effect to trigger debounced update when updatedItems changes
+  useEffect(() => {
+    if (updatedItems.length > 0) {
+      debouncedUpdateCartItems();
+    }
+  }, [updatedItems]);
+
+  // Handle quantity change of a cart item
+  const handleQuantityChange = (productId, newQuantity) => {
+    setUpdatedItems((prevItems) => {
+      const itemIndex = prevItems.findIndex((item) => item.id === productId);
+      if (itemIndex !== -1) {
+        const updatedItem = { ...prevItems[itemIndex], quantity: newQuantity };
+        const newUpdatedItems = [...prevItems];
+        newUpdatedItems[itemIndex] = updatedItem;
+        return newUpdatedItems;
+      } else {
+        return [...prevItems, { id: productId, quantity: newQuantity }];
+      }
+    });
+  };
 
   return (
     <div className={`cart-container ${showCart ? "show" : ""}`}>
@@ -28,7 +74,7 @@ const CartContainer = () => {
         {cartItems.length > 0 ? (
           cartItems.map((item) => (
             <div key={item.id}>
-              <CartItem item={item} />
+              <CartItem item={item} onQuantityChange={handleQuantityChange} />
             </div>
           ))
         ) : (

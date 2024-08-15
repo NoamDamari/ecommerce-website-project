@@ -5,103 +5,23 @@ const userSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
     required: true,
   },
-  cart: [
-    {
-      id: {
-        type: Number,
-        required: true,
-      },
-      title: {
-        type: String,
-        required: true,
-      },
-      description: {
-        type: String,
-        required: true,
-      },
-      category: {
-        type: String,
-        required: true,
-      },
-      brand: {
-        type: String,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      images: {
-        type: [String],
-        required: true,
-      },
-      rating: {
-        type: Number,
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-        default: 1,
-      }
-    }
-  ],
- purchasedProducts: [
-    {
-      id: {
-        type: Number,
-        required: true,
-      },
-      title: {
-        type: String,
-        required: true,
-      },
-      description: {
-        type: String,
-        required: true,
-      },
-      category: {
-        type: String,
-        required: true,
-      },
-      brand: {
-        type: String,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      images: {
-        type: [String],
-        required: true,
-      },
-      rating: {
-        type: Number,
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-      purchaseDate: {
-        type: Date,
-        default: Date.now
-      }
-    }
-  ]
+  cart: {
+    type: Schema.Types.ObjectId,
+    ref: "Cart",
+  },
 });
 
-const User = mongoose.model('User' , userSchema , 'users');
+// Create the user model
+const User = mongoose.model("User", userSchema, "users");
 module.exports = User;
-
-

@@ -39,7 +39,7 @@ export const categoryOptions = [
 ];
 
 export const priceRangeOptions = [
-  { label: "All Prices", value: [0,Infinity] },
+  { label: "All Prices", value: [0, Infinity] },
   { label: "0 - 50", value: [0, 50] },
   { label: "50 - 500", value: [50, 500] },
   { label: "500 - 1000", value: [500, 1000] },
@@ -85,5 +85,25 @@ export const ratingOptions = [
       </div>
     ),
     value: 1,
+  },
+];
+
+export const techCategoriesOptions = [
+  { label: "All Categories", value: "all-categories" },
+  {
+    label: "Laptops",
+    value: ["laptops"],
+  },
+  {
+    label: "Tablets",
+    value: ["tablets"],
+  },
+  {
+    label: "Smartphones",
+    value: ["smartphones"],
+  },
+  {
+    label: "Mobile Accessories",
+    value: ["mobile-accessories"],
   },
 ];

@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
 const cartController = require("../controllers/cartController");
 const authenticateToken = require("../middlewares/authMiddleware");
 
-// Add a product to the cart or update its quantity if it already exists
+// Add a product to the cart or update if it already exists
 router.post("/add", authenticateToken, cartController.addToCart);
 
 // Delete a product from the cart
@@ -13,6 +12,12 @@ router.delete(
   authenticateToken,
   cartController.removeFromCart
 );
+
+// Update single item
+router.patch("/update" , authenticateToken , cartController.updateCartItemQuantity)
+
+// Update Multiple items
+router.patch("/update-items" , authenticateToken , cartController.updateMultipleCartItemsQuantity)
 
 // Get all items in the user's cart
 router.get("/cart/:id", authenticateToken, cartController.getCartItems);

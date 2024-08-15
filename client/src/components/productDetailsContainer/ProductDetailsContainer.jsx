@@ -4,27 +4,27 @@ import "./ProductDetailsContainer.css";
 import QuantitySelector from "../quantitySelector/QuantitySelector";
 import { useContext, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
-import { CartContext } from "../../context/CartContext";
-import {UserContext} from "../../context/UserContext"
+import { UserContext } from "../../context/UserContext";
+import { useCart } from "../../hooks/useCart";
 
 const ProductDetailsContainer = () => {
   const { selectedProduct } = useContext(ProductsContext);
-  const { addToCart } = useContext(CartContext);
-  const {user} = useContext(UserContext);
+  const { handleAddToCart } = useCart();
+  const { user } = useContext(UserContext);
 
   const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(selectedProduct.price || 0);
 
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
+    setPrice(selectedProduct.price * newQuantity);
   };
 
-  const handleAddToCart = () => {
-    if(user) {
-      addToCart(selectedProduct, quantity , user.id);
-      console.log("Product added to cart")
-    }
-    else {
-      alert("You need to login first")
+  const handleAddToCartClick = () => {
+    if (user) {
+      handleAddToCart(selectedProduct, quantity);
+    } else {
+      alert("You need to login first");
     }
   };
 
@@ -61,12 +61,12 @@ const ProductDetailsContainer = () => {
                 onQuantityChange={handleQuantityChange}
               />
               <p className="card-text">
-                <strong>Total price</strong>
+                <strong>Total Price: </strong>
                 <small className="text-body-secondary">
-                  {selectedProduct.price}
+                  {price.toFixed(2)}
                 </small>
               </p>
-              <button className="btn btn-dark" onClick={handleAddToCart}>
+              <button className="btn btn-dark" onClick={handleAddToCartClick}>
                 {" "}
                 Add to cart
               </button>

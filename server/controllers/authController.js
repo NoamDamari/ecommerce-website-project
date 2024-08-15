@@ -1,17 +1,9 @@
 const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 require("dotenv").config();
-
-const saltRounds = 10;
-
-// Create a JWT token for a given user ID
-const createToken = (userId) => {
-  const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-  return token;
-};
+const {createNewUser} = require("../services/userService");
+const { handleServerError} = require("../utils/errorUtils");
+const {createToken , saltRounds} = require("../utils/authUtils");
 
 // Controller function to handle user registration
 const register = async (req, res) => {
@@ -24,10 +16,10 @@ const register = async (req, res) => {
       return res.status(400).json({ message: "Email already exists" });
     }
 
-     // Hash the user's password before saving it to the database
-    const hashedPassword = await bcrypt.hash(password , saltRounds);
-    const newUser = new User({ username, email, password: hashedPassword });
-    await newUser.save();
+    // Hash the user's password before saving it to the database
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const newUser = await createNewUser(username, email, hashedPassword);
 
     // Generate a JWT token for the registered user
     const token = createToken(newUser._id);
@@ -39,13 +31,11 @@ const register = async (req, res) => {
         username: newUser.username,
         email: newUser.email,
         cart: newUser.cart,
-        purchasedProducts: newUser.purchasedProducts,
       },
-      token: token
+      token: token,
     });
   } catch (error) {
-    console.error("Error registering user:", error);
-    res.status(500).json({ error: "Server error" });
+    return handleServerError(res, "Error registering user", error);
   }
 };
 
@@ -56,7 +46,7 @@ const login = async (req, res) => {
   try {
     const user = await User.findOne({ email });
 
-    if (!user || !await bcrypt.compare(password, user.password)) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
@@ -71,13 +61,11 @@ const login = async (req, res) => {
         email: user.email,
         password: user.password,
         cart: user.cart,
-        purchasedProducts: user.purchasedProducts,
       },
-      token: token
+      token: token,
     });
   } catch (error) {
-    console.error("Error logging in user:", error);
-    res.status(500).json({ error: "Server error" });
+    return handleServerError(res, "Error logging in user", error);
   }
 };
 

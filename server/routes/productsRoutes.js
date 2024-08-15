@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
-const { fetchAllProducts } = require("../controllers/productsController");
+const productsController = require("../controllers/productsController");
 
-// Get all products list
-router.get("/", fetchAllProducts);
+// Get all products
+//router.get("/", productsController.fetchAllProducts);
+
+// Get all Tech products
+router.get("/", productsController.fetchTechProducts);
 
 module.exports = router;

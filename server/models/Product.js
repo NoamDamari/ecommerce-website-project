@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Define the product schema
 const productSchema = new Schema({
   id: {
     type: Number,
     required: true,
-    unique: true,
+    //unique: true,
   },
   title: {
     type: String,
@@ -43,6 +42,4 @@ const productSchema = new Schema({
   },
 });
 
-// Create the product model
-const Product = mongoose.model("Product", productSchema , 'products');
-module.exports = Product;
+module.exports = productSchema;

@@ -1,25 +1,29 @@
-import React, { useEffect, useContext } from "react";
-import { ProductsContext } from "../../context/ProductsContext";
+import React, { useEffect} from "react";
+import { useFetch } from "../../hooks/useFetch";
+import { useLoading } from "../../hooks/useLoading";
 import ProductsContainer from "../../components/productsContainer/ProductsContainer";
 import SideBar from "../../components/sidebar/SideBar";
+import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import "./ProductsPage.css";
-
 
 const ProductsPage = () => {
   // Products context values
-  const { isFetched, fetchProducts, isLoading } = useContext(ProductsContext);
+  const { isFetched, fetchProducts } = useFetch();
+  const { isLoading, startLoading, stopLoading } = useLoading();
 
   // Effect to fetch products if not already fetched
   useEffect(() => {
+
     if (!isFetched.current) {
-      fetchProducts();
+      startLoading();
+      fetchProducts().finally(() => stopLoading());
       isFetched.current = true;
     }
   }, [fetchProducts, isFetched]);
 
   // Show loading indicator
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   return (
@@ -31,4 +35,3 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
-
