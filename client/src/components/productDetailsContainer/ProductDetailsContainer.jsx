@@ -2,18 +2,20 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./ProductDetailsContainer.css";
 import QuantitySelector from "../quantitySelector/QuantitySelector";
-import { useContext, useState } from "react";
+import { useContext, useState} from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 import { UserContext } from "../../context/UserContext";
 import { useCart } from "../../hooks/useCart";
+import { useProducts } from "../../hooks/useProducts";
 
 const ProductDetailsContainer = () => {
   const { selectedProduct } = useContext(ProductsContext);
+  const { selectProduct } = useProducts();
   const { handleAddToCart } = useCart();
   const { user } = useContext(UserContext);
 
   const [quantity, setQuantity] = useState(1);
-  const [price, setPrice] = useState(selectedProduct.price || 0);
+  const [price, setPrice] = useState(selectedProduct?.price || 0);
 
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);

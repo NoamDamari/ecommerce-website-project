@@ -2,24 +2,24 @@ import React, { useContext } from "react";
 import "./ProductCard.css";
 import { Link } from "react-router-dom";
 import { ProductsContext } from "../../context/ProductsContext";
-import {UserContext} from "../../context/UserContext"
+import { UserContext } from "../../context/UserContext";
 import { useCart } from "../../hooks/useCart";
+import { useProducts } from "../../hooks/useProducts";
 
 const ProductCard = ({ product }) => {
-  const { selectProduct } = useContext(ProductsContext);
+  const { selectProduct } = useProducts();
   const { handleAddToCart } = useCart();
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const handleProductClick = () => {
     selectProduct(product);
   };
 
   const handleAddToCartClick = () => {
-    if(user) {
-      handleAddToCart(product , 1);
-    }
-    else {
-      alert("You need to login first")
+    if (user) {
+      handleAddToCart(product, 1);
+    } else {
+      alert("You need to login first");
     }
   };
 
@@ -35,7 +35,7 @@ const ProductCard = ({ product }) => {
       <div className="card-body">
         <h5 className="card-title">{product.title}</h5>
         <div className="card-price-rating">
-        <div className="card-price">
+          <div className="card-price">
             <strong>Price:</strong>
             <p>{product.price}</p>
           </div>

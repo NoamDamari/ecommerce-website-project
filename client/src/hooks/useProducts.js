@@ -1,10 +1,11 @@
 import { ProductsContext } from "../context/ProductsContext";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import axios from "axios";
 
-export const useFetch = () => {
+export const useProducts = () => {
   const {
     setProductsList,
+    setSelectedProduct,
     setFilteredProductsList,
     isFetched,
   } = useContext(ProductsContext);
@@ -22,5 +23,18 @@ export const useFetch = () => {
     }
   }, []);
 
-  return { isFetched, fetchProducts };
+  const selectProduct = (product) => {
+    setSelectedProduct(product);
+    sessionStorage.setItem("selectedProduct", JSON.stringify(product));
+  };
+
+  useEffect(() => {
+    const storedProduct = sessionStorage.getItem("selectedProduct");
+    if (storedProduct) {
+      const product = JSON.parse(storedProduct);
+      setSelectedProduct(product);
+    }
+  }, []);
+
+  return { isFetched, fetchProducts, selectProduct };
 };

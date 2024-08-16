@@ -10,11 +10,6 @@ export const ProductsProvider = ({ children }) => {
   // Ref to track if products have been fetched
   const isFetched = useRef(false);
 
-  // Handle product selection
-  const selectProduct = (product) => {
-    setSelectedProduct(product);
-  };
-
   return (
     <ProductsContext.Provider
       value={{
@@ -23,7 +18,7 @@ export const ProductsProvider = ({ children }) => {
         filteredProductsList,
         setFilteredProductsList,
         selectedProduct,
-        selectProduct,
+        setSelectedProduct,
         isFetched,
       }}
     >

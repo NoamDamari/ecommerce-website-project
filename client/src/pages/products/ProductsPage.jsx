@@ -1,14 +1,14 @@
 import React, { useEffect} from "react";
-import { useFetch } from "../../hooks/useFetch";
 import { useLoading } from "../../hooks/useLoading";
 import ProductsContainer from "../../components/productsContainer/ProductsContainer";
 import SideBar from "../../components/sidebar/SideBar";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import "./ProductsPage.css";
+import { useProducts } from "../../hooks/useProducts";
 
 const ProductsPage = () => {
   // Products context values
-  const { isFetched, fetchProducts } = useFetch();
+  const { isFetched, fetchProducts } = useProducts();
   const { isLoading, startLoading, stopLoading } = useLoading();
 
   // Effect to fetch products if not already fetched
