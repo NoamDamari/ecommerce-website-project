@@ -6,6 +6,7 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [userOrders, setUserOrders] = useState([]);
 
   return (
     <UserContext.Provider
@@ -14,6 +15,8 @@ export const UserProvider = ({ children }) => {
         setUser,
         token,
         setToken,
+        userOrders,
+        setUserOrders,
         isLoading,
         setIsLoading,
       }}

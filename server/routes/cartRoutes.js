@@ -13,6 +13,11 @@ router.delete(
   cartController.removeFromCart
 );
 
+router.delete(
+  "/clear/:userId",
+  authenticateToken,
+  cartController.clearCart
+);
 // Update single item
 router.patch("/update" , authenticateToken , cartController.updateCartItemQuantity)
 

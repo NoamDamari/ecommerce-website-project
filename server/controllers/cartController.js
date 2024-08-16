@@ -1,5 +1,6 @@
 const { handleServerError} = require("../utils/errorUtils");
 const {findUserCart} = require("../services/cartService")
+const Cart = require("../models/Cart");
 
 // Get all items in the user's cart
 const getCartItems = async (req, res) => {
@@ -68,6 +69,24 @@ const removeFromCart = async (req, res) => {
   }
 };
 
+const clearCart = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    // Find the user's cart and clear its items
+    const userCart = await Cart.findOneAndUpdate(
+      { user: userId },
+      { $set: { items: [] } },
+    );
+
+    if (!userCart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+    return res.status(200).json({ message: "Cart cleared successfully" });
+  } catch(error) {
+    return handleServerError(res, "Failed to clear cart", error);
+  }
+}
+
 // Update a single product's quantity in the cart
 const updateCartItemQuantity = async (req, res) => {
   const { userId, item, newQuantity } = req.body;
@@ -122,6 +141,7 @@ const updateMultipleCartItemsQuantity = async (req, res) => {
 module.exports = {
   addToCart,
   removeFromCart,
+  clearCart,
   updateCartItemQuantity,
   updateMultipleCartItemsQuantity,
   getCartItems,

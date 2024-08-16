@@ -3,14 +3,13 @@ import "./Navbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { Link } from "react-router-dom";
-import { useEffect , useState} from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../../hooks/useCart";
 import { useAuth } from "../../hooks/useAuth";
 
 const Navbar = () => {
-
   const { user, handleUserSignOut } = useAuth();
-  const { cartItems ,handleShowCart } = useCart();
+  const { cartItems, handleShowCart } = useCart();
   const [totalItems, setTotalItems] = useState(0);
 
   useEffect(() => {
@@ -56,10 +55,15 @@ const Navbar = () => {
           <div className="buttons-container">
             {user && (
               <div className="me-4">
-                <span className="me-4"><i className="bi bi-person-fill me-2"></i>{user.username}</span>
-                <button className="btn-outline-warning me-2 ms-2">
-                  <i className="bi bi-bag-fill me-2"></i>My Purchases
-                </button>
+                <span className="me-4">
+                  <i className="bi bi-person-fill me-2"></i>
+                  {user.username}
+                </span>
+                <Link to="/orders">
+                  <button className="btn-outline-warning me-2 ms-2">
+                    <i className="bi bi-bag-fill me-2"></i>My Purchases
+                  </button>
+                </Link>
                 <button
                   className="btn-outline-dark me-2"
                   onClick={handleUserSignOut}

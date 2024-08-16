@@ -10,8 +10,11 @@ const CartContainer = () => {
   const {
     cartItems,
     handleCloseCart,
+    handleClearCart,
     showCart,
     handleUpdateMultipleCartItems,
+    handleBuyItems,
+    getTotalItemsInCart,
   } = useCart();
 
   const debounceTimeoutRef = useRef(null);
@@ -57,18 +60,42 @@ const CartContainer = () => {
     });
   };
 
+  const handleBuyItemsClick = () => {
+    const itemsQuantity = getTotalItemsInCart();
+    const orderData = {
+      items: cartItems,
+      totalPrice: totalPrice,
+      itemsQuantity: itemsQuantity,
+    };
+    handleBuyItems(orderData);
+  };
+
+  const handleClearCartClick = () => {
+    handleClearCart();
+  }
+
   return (
     <div className={`cart-container ${showCart ? "show" : ""}`}>
       <div className="cart-header">
         <h5 className="cart-title">Shopping Cart</h5>
-        <button
-          onClick={handleCloseCart}
-          type="button"
-          className="btn-close"
-          aria-label="Close"
-        >
-          <i className="bi bi-x close-icon"></i>
-        </button>
+        <div className="buttons-container">
+          <button
+            onClick={handleClearCartClick}
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+          >
+            <i className="bi bi-trash"></i>
+          </button>
+          <button
+            onClick={handleCloseCart}
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+          >
+            <i className="bi bi-x close-icon"></i>
+          </button>
+        </div>
       </div>
       <div className="cart-body">
         {cartItems.length > 0 ? (
@@ -84,7 +111,11 @@ const CartContainer = () => {
           <h5 id="total-price">
             Total Price: <strong>{totalPrice.toFixed(2)}</strong>
           </h5>
-          <button type="button" className="btn btn-success buy-items-btn">
+          <button
+            type="button"
+            className="btn btn-success buy-items-btn"
+            onClick={handleBuyItemsClick}
+          >
             Buy Items
           </button>
         </div>

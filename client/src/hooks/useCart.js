@@ -1,12 +1,14 @@
 import { useEffect, useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { CartContext } from "../context/CartContext";
+import { addOrder } from "../services/ordersService";
 import {
   fetchCartItems,
   addToCart,
   updateCartItem,
   updateMultipleCartItems,
   removeItemFromCart,
+  clearCart,
 } from "../services/cartService";
 
 export const useCart = () => {
@@ -66,15 +68,14 @@ export const useCart = () => {
     try {
       // Update items in the cart on the server
       await updateMultipleCartItems(user.id, token, items);
-  
+
       // Update the local state
       setCartItems((prevItems) => {
-    
-        const itemsToUpdate = new Map(items.map(item => [item.id, item]));
-  
+        const itemsToUpdate = new Map(items.map((item) => [item.id, item]));
+
         // Map through the previous items and update them
         return prevItems.map((item) =>
-          itemsToUpdate.has(item.id) 
+          itemsToUpdate.has(item.id)
             ? { ...item, quantity: itemsToUpdate.get(item.id).quantity }
             : item
         );
@@ -90,9 +91,31 @@ export const useCart = () => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
+  const handleClearCart = async () => {
+    const response = await clearCart(user.id, token);
+    if (response.success) {
+      setCartItems([]);
+    }
+  };
+
   // Function to get the total number of items in the cart
   const getTotalItemsInCart = () => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const handleBuyItems = async (orderData) => {
+    try {
+      const response = await addOrder(user.id, token, orderData);
+      if (response.success) {
+        await clearCart(user.id, token);
+        setCartItems([]);
+      }
+    } catch (error) {
+      console.error(
+        "Error while adding order:",
+        error.response?.data || error.message
+      );
+    }
   };
 
   return {
@@ -104,6 +127,8 @@ export const useCart = () => {
     handleUpdateCartItem,
     handleUpdateMultipleCartItems,
     handleRemoveItemFromCart,
+    handleClearCart,
     getTotalItemsInCart,
+    handleBuyItems,
   };
 };
