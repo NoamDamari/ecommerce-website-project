@@ -6,10 +6,9 @@ import Form from "../../components/form/Form";
 import { useAuth } from "../../hooks/useAuth";
 
 const RegisterPage = () => {
-
   const { isLoading } = useContext(UserContext);
   const { handleUserRegister } = useAuth();
-  
+
   const fields = [
     {
       id: "register-username",

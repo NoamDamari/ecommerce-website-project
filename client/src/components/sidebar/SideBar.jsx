@@ -4,12 +4,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../filterSection/FilterSection";
 import FilterSection from "../filterSection/FilterSection";
 import { useState } from "react";
-import { priceRangeOptions, ratingOptions , techCategoriesOptions } from "../../data/filterOptions";
+import {
+  priceRangeOptions,
+  ratingOptions,
+  techCategoriesOptions,
+} from "../../data/filterOptions";
 import { useFilters } from "../../hooks/useFilters";
 
-
 const SideBar = () => {
-  
   const {
     handleCategorySelect,
     handlePriceRangeSelect,
@@ -27,7 +29,7 @@ const SideBar = () => {
   };
 
   return (
-    <div className="bg-body-tertiary sidebar-container">
+    <div className="sidebar-container">
       <button className="btn btn-dark reset-btn" onClick={handleReset}>
         Reset Filters
       </button>
@@ -53,5 +55,3 @@ const SideBar = () => {
   );
 };
 export default SideBar;
-
-

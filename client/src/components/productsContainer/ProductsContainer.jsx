@@ -1,12 +1,11 @@
-import React, { useEffect, useState , useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import ProductCard from "../../components/productCard/ProductCard";
 import { ProductsContext } from "../../context/ProductsContext";
 import "./ProductsContainer.css";
 
 const ProductsContainer = () => {
   
-   // Products context values
-  const {filteredProductsList} = useContext(ProductsContext)
+  const { filteredProductsList } = useContext(ProductsContext);
 
   return (
     <div className="product-grid">
@@ -20,4 +19,3 @@ const ProductsContainer = () => {
 };
 
 export default ProductsContainer;
-

@@ -1,14 +1,15 @@
 import { UserContext } from "../context/UserContext";
-import { useContext , useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { userLogin, userRegister } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 
 export const useAuth = () => {
-  const { user , token , setUser, setToken, setIsLoading } = useContext(UserContext);
+  const { user, token, setUser, setToken, setIsLoading } =
+    useContext(UserContext);
   const navigate = useNavigate();
 
-   // Load user and token from session storage when component mounts
-   useEffect(() => {
+  // Load user and token from session storage when component mounts
+  useEffect(() => {
     const storedUser = JSON.parse(sessionStorage.getItem("user"));
     const storedToken = sessionStorage.getItem("token");
     if (storedUser && storedToken) {
@@ -53,10 +54,13 @@ export const useAuth = () => {
 
   // Handle user sign out and remove user and token from state and session storage
   const handleUserSignOut = () => {
+    setIsLoading(true);
     setUser(null);
     setToken(null);
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("token");
+    setIsLoading(false);
+    navigate("/");
   };
 
   return {
@@ -66,4 +70,3 @@ export const useAuth = () => {
     handleUserSignOut,
   };
 };
-

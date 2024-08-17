@@ -1,5 +1,5 @@
 import { getUserOrders } from "../services/ordersService";
-import { useContext , useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 
 export const useOrders = () => {
@@ -13,7 +13,7 @@ export const useOrders = () => {
     }
   }, [user, token]);
 
-  const handleGetUserOrders = async (userId , token) => {
+  const handleGetUserOrders = async (userId, token) => {
     const userOrders = await getUserOrders(userId, token);
     setUserOrders(userOrders);
   };

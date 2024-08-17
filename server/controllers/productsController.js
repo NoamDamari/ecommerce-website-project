@@ -21,7 +21,7 @@ const fetchTechProducts = async (req, res) => {
       "mobile-accessories",
     ];
     const fields = "id,title,description,brand,category,price,images,rating";
-    
+
     const url = `https://dummyjson.com/products?limit=200&select=${fields}`;
     const response = await axios.get(url);
 

@@ -15,14 +15,14 @@ export const addOrder = async (userId, token, orderData) => {
       }
     );
 
-    return {success: true , response: response};
+    return { success: true, response: response };
   } catch (error) {
     console.error("Error adding order:", error);
   }
 };
 
 // Get all user's orders data
-export const getUserOrders = async (userId , token) => {
+export const getUserOrders = async (userId, token) => {
   try {
     const response = await axios.get(`${API_URL}/${userId}`, {
       headers: {

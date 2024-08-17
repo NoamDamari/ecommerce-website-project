@@ -13,16 +13,22 @@ router.delete(
   cartController.removeFromCart
 );
 
-router.delete(
-  "/clear/:userId",
-  authenticateToken,
-  cartController.clearCart
-);
+// Delete all products from the user's cart
+router.delete("/clear/:userId", authenticateToken, cartController.clearCart);
+
 // Update single item
-router.patch("/update" , authenticateToken , cartController.updateCartItemQuantity)
+router.patch(
+  "/update",
+  authenticateToken,
+  cartController.updateCartItemQuantity
+);
 
 // Update Multiple items
-router.patch("/update-items" , authenticateToken , cartController.updateMultipleCartItemsQuantity)
+router.patch(
+  "/update-items",
+  authenticateToken,
+  cartController.updateMultipleCartItemsQuantity
+);
 
 // Get all items in the user's cart
 router.get("/cart/:id", authenticateToken, cartController.getCartItems);

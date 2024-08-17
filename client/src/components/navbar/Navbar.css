@@ -1,9 +1,12 @@
 .navbar {
-    background-color: rgb(238, 238, 238);
+  background-color: #213244;
 }
 .buttons-container {
-    width: 20%;
-    min-width: fit-content;
-    display: flex;
-    justify-content: space-around;
+  width: 20%;
+  min-width: fit-content;
+  display: flex;
+  justify-content: space-around;
+}
+.username-text {
+  color: rgb(237, 237, 237);
 }

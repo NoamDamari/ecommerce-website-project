@@ -72,7 +72,7 @@ const CartContainer = () => {
 
   const handleClearCartClick = () => {
     handleClearCart();
-  }
+  };
 
   return (
     <div className={`cart-container ${showCart ? "show" : ""}`}>
@@ -107,13 +107,13 @@ const CartContainer = () => {
         ) : (
           <p>Your cart is empty</p>
         )}
-        <div className="container cart-buttom-container">
+        <div className="cart-buttom-container">
           <h5 id="total-price">
             Total Price: <strong>{totalPrice.toFixed(2)}</strong>
           </h5>
           <button
             type="button"
-            className="btn btn-success buy-items-btn"
+            className="btn btn-light buy-items-btn"
             onClick={handleBuyItemsClick}
           >
             Buy Items

@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./ProductDetailsContainer.css";
 import QuantitySelector from "../quantitySelector/QuantitySelector";
-import { useContext, useState} from "react";
+import { useContext, useState } from "react";
 import { ProductsContext } from "../../context/ProductsContext";
 import { UserContext } from "../../context/UserContext";
 import { useCart } from "../../hooks/useCart";

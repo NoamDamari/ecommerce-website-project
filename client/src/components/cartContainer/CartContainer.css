@@ -6,7 +6,7 @@
   max-width: 35%;
   min-width: 30%;
   height: 100%;
-  background-color: #343a40;
+  background-color: #213244;
   color: #fff;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   transition: right 0.8s ease;
@@ -19,7 +19,7 @@
 
 .button-container {
   display: flex;
-  gap: 10px; 
+  gap: 10px;
 }
 
 .cart-header {
@@ -60,9 +60,4 @@
 
 .cart-buttom-container {
   justify-content: space-between;
-}
-
-#total-price {
-  text-align: center;
-  padding: 0;
 }

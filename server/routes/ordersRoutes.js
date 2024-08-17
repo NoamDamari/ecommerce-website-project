@@ -3,8 +3,10 @@ const router = express.Router();
 const authenticateToken = require("../middlewares/authMiddleware");
 const ordersController = require("../controllers/ordersController");
 
-router.get("/:userId" , authenticateToken , ordersController.getUserOrders);
+// Get user's orders data
+router.get("/:userId", authenticateToken, ordersController.getUserOrders);
 
-router.post("/addOrder" , authenticateToken , ordersController.addOrder);
+// Add order
+router.post("/addOrder", authenticateToken, ordersController.addOrder);
 
 module.exports = router;

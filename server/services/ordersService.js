@@ -24,7 +24,7 @@ const saveNewOrder = async (userId, orderData) => {
   try {
     // Create a new order
     const newOrder = new Order({
-      userId: userId, 
+      userId: userId,
       items: orderData.items,
       date: new Date(),
       totalPrice: orderData.totalPrice,

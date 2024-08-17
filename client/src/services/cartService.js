@@ -57,7 +57,11 @@ export const updateCartItem = async (userId, token, item, newQuantity) => {
     return { status: response.status, success: true };
   } catch (error) {
     console.error("Error updating cart item:", error);
-    return { status: error.response?.status || 500, success: false, message: error.message };
+    return {
+      status: error.response?.status || 500,
+      success: false,
+      message: error.message,
+    };
   }
 };
 
@@ -81,28 +85,39 @@ export const updateMultipleCartItems = async (userId, token, items) => {
     return { status: response.status, success: true };
   } catch (error) {
     console.error("Error updating cart item:", error);
-    return { status: error.response?.status || 500, success: false, message: error.message };
+    return {
+      status: error.response?.status || 500,
+      success: false,
+      message: error.message,
+    };
   }
 };
 
 // Removes an item from the user's cart
 export const removeItemFromCart = async (userId, token, itemId) => {
   try {
-    const response = await axios.delete(`${API_URL}/delete/${userId}/${itemId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.delete(
+      `${API_URL}/delete/${userId}/${itemId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     console.log("Cart item removed successfully");
     return { status: response.status, success: true };
   } catch (error) {
     console.error("Error removing item from cart:", error);
-    return { status: error.response?.status || 500, success: false, message: error.message };
+    return {
+      status: error.response?.status || 500,
+      success: false,
+      message: error.message,
+    };
   }
 };
 
-// Removes all item from the user's cart
-export const clearCart = async(userId, token) => {
+// Removes all items from the user's cart
+export const clearCart = async (userId, token) => {
   try {
     const response = await axios.delete(`${API_URL}/clear/${userId}`, {
       headers: {
@@ -113,7 +128,10 @@ export const clearCart = async(userId, token) => {
     return { status: response.status, success: true };
   } catch (error) {
     console.error("Error clear cart:", error);
-    return { status: error.response?.status || 500, success: false, message: error.message };
+    return {
+      status: error.response?.status || 500,
+      success: false,
+      message: error.message,
+    };
   }
 };
-

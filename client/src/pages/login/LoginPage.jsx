@@ -6,7 +6,6 @@ import Form from "../../components/form/Form";
 import { useAuth } from "../../hooks/useAuth";
 
 const LoginPage = () => {
-  
   const { isLoading } = useContext(UserContext);
   const { handleUserLogin } = useAuth(UserContext);
 

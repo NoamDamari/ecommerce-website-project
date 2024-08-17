@@ -2,7 +2,6 @@ import { createContext, useState } from "react";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-
   const [cartItems, setCartItems] = useState([]);
   const [showCart, setShowCart] = useState(false);
 
@@ -12,7 +11,7 @@ export const CartProvider = ({ children }) => {
         cartItems,
         setCartItems,
         showCart,
-        setShowCart
+        setShowCart,
       }}
     >
       {" "}

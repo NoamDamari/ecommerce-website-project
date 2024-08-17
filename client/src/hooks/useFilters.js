@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../context/ProductsContext";
 
 export const useFilters = () => {
-
   const { productsList, setFilteredProductsList } = useContext(ProductsContext);
   const [selectedCategories, setSelectedCategories] = useState([
     "all-categories",

@@ -1,9 +1,9 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
-const {createNewUser} = require("../services/userService");
-const { handleServerError} = require("../utils/errorUtils");
-const {createToken , saltRounds} = require("../utils/authUtils");
+const { createNewUser } = require("../services/userService");
+const { handleServerError } = require("../utils/errorUtils");
+const { createToken, saltRounds } = require("../utils/authUtils");
 
 // Controller function to handle user registration
 const register = async (req, res) => {
